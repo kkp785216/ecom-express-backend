@@ -39,7 +39,7 @@ const updateProfile = expressAsyncHandler(
             if (await User.findOne({ _id: userId, email })) throw new Error("Email already in use!");
             else if (await User.findOne({ _id: { $ne: userId }, email })) throw new Error("Email already exists!");
         }
-        if (mobile) {
+        if (mobile) { 
             if (!mobile.match(/^[0-9]{10}$/)) throw new Error("Invalid mobile no.");
             if (await User.findOne({ _id: userId, mobile })) throw new Error("Mobile already in use!");
             else if (await User.findOne({ _id: { $ne: userId }, mobile })) throw new Error("Mobile no. already exists!");
