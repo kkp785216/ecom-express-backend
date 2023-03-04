@@ -2,6 +2,7 @@ import bodyParser from "body-parser";
 import express from "express";
 import dbConnect from "./config/dbConnect";
 import authRouter from "./routes/authRoute";
+import userRouter from "./routes/userRouter";
 import { config } from "dotenv";
 import { errorHandler, notFound } from "./middlewares/errorHandler";
 
@@ -23,8 +24,11 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-// serving -  {{ecom-auth-host}}
+// serving -  {{ecom-auth-host}} Create User, Login User
 app.use('/api/auth', authRouter);
+
+// serving -  {{ecom-user-host}} Get Profile, Update Profile, Delete Profile,
+app.use('/api/user', userRouter);
 
 // Error handling
 app.use(notFound);
