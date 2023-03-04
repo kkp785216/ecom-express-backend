@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import User from '../models/userModels';
 import expressAsyncHandler from 'express-async-handler';
 import type { LoginRequestBody } from 'constants/types';
+import { generateToken } from '../config/jwtToken';
 
 // Create a new user
 const createUser = expressAsyncHandler(
@@ -32,7 +33,10 @@ const loginUser = expressAsyncHandler(
             if (await findUser.isPasswordMatched(password)) {
                 const findUserRes = findUser.toJSON(); // converting MongoDB Object to a normal Object
                 const { password, ...rest } = findUserRes; // removing "password" field from response
-                res.json(rest); // sending user detail without "password"
+                res.json({
+                    ...rest,
+                    token: generateToken(findUser._id)
+                }); // sending user detail without "password"
             }
             else {
                 throw new Error("Incorrect Password!");

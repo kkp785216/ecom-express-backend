@@ -7,6 +7,7 @@ type TypeUser = {
     email: string;
     mobile: string;
     password: string;
+    role?: "admin" | "user"
     isPasswordMatched: (inputPassword: string) => Promise<boolean>;
 }
 
@@ -33,6 +34,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    role: {
+        type:  String,
+        enum: ['user', 'admin'],
+        default: "user",
+    }
 });
 
 // hash the password before save it to database
