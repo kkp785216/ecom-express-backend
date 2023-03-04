@@ -1,13 +1,8 @@
 import mongoose from 'mongoose'; // Erase if already required
 import bcrypt from 'bcrypt';
+import type { UserProfileResponse } from 'constants/types';
 
-type TypeUser = {
-    firstName: string;
-    lastName?: string;
-    email: string;
-    mobile: string;
-    password: string;
-    role?: "admin" | "user"
+type TypeAuthUser = UserProfileResponse & {
     isPasswordMatched: (inputPassword: string) => Promise<boolean>;
 }
 
@@ -54,4 +49,4 @@ userSchema.methods.isPasswordMatched = async function (inputPassword: string) {
 }
 
 //Export the model
-export default mongoose.model<TypeUser>('User', userSchema);
+export default mongoose.model<TypeAuthUser>('User', userSchema);
